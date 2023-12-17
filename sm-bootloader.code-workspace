@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"target_cfg.h": "c",
+			"boot_cfg.h": "c",
+			"bootloader.h": "c",
+			"stat.h": "c",
+			"com.h": "c",
+			"hw_init.h": "c",
+			"rtos.h": "c",
+			"stm32f0xx.h": "c",
+			"common.h": "c",
+			"stddef.h": "c",
+			"freertos.h": "c",
+			"string.h": "c",
+			"assert.h": "c",
+			"core_cm0.h": "c",
+			"cmsis_gcc.h": "c",
+			"portable.h": "c"
+		},
+		"cortex-debug.variableUseNaturalFormat": false
+	}
+}
