@@ -57,16 +57,18 @@ initial expected message length (1 additional byte for function + 4 data bytes)
 #define COM_INIT_SIZE             (COM_SERVICE_MIN_SIZE + COM_ADU_REQUIRED_PART)
 #define COM_FILE_RW_REF                                         (uint8_t)(0x06U)
 /* Public function prototypes ------------------------------------------------*/
-
 extern void     com_init                   (void);
 extern uint16_t com_CRC16_u16              (const uint8_t* data, uint16_t length);
 extern bool     com_cmd_bind               (const COM_MODBUS_HANDLER_TypeDef* p_cmd);
-extern void     com_rec_byte               (const uint8_t byte);
 extern void     com_set_rec_data_length    (const uint8_t length);
 extern void     com_generate_callback      (const COM_MODBUS_SERVICE_TypeDef* service);
 extern void     com_response_error         (const uint8_t error,const uint8_t exception);
+// functions for hw part
+extern void     com_rec_byte               (const uint8_t byte);
 // functions that need to be overridden
 extern void     com_send                   (const uint8_t* p_data, const uint32_t size);
+extern bool     com_is_data_sent           (void);
+
 #endif /*COM_H*/
 
 /******************************* end of file **********************************/

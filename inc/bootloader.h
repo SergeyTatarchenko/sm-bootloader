@@ -31,7 +31,8 @@ extern uint32_t             boot_crc32            (const void *buf, size_t size)
 extern void                 boot_hw_init          (void);
 extern void                 boot_hw_deinit        (void);
 extern void                 boot_page_erase       (const uint32_t page_start_addr);
-extern bool                 boot_stay_in_request  (void);
+extern bool                 boot_check_stay_in    (void);
+extern void                 boot_stay_in_request  (void);
 extern void                 boot_stay_in_reset    (void);
 extern bool                 boot_flash_write_block(const uint32_t addr,
                                                    const uint8_t* p_data,

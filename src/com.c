@@ -91,7 +91,7 @@ void com_init(void)
     configASSERT(xSemaphore_data_received);
     
     xHandle_rx_task_handle = xTaskCreateStatic(task_incCmdProc, 
-                                                "modbus rx task", 
+                                                "modbus tx/rx task", 
                                                 COM_TASK_RX_STACK_SIZE, 
                                                 NULL, 
                                                 COM_TASK_RX_PRIORITY, 
@@ -268,7 +268,7 @@ static void resetAndFlush(void)
  * @brief request for data transmit
  *
 */
-void transmitRequest(void)
+static void transmitRequest(void)
 {
     com_send(tx_control.p_buffer,tx_control.length);
 }
@@ -326,10 +326,7 @@ void __attribute__((weak)) com_send(const uint8_t * p_data, const uint32_t size)
 */
 static bool generate_modbus_message(const COM_MODBUS_SERVICE_TypeDef* service)
 {    
-    if((service->length + COM_ADU_REQUIRED_PART) > COM_BUFFER_SIZE)
-    {
-        return false;
-    }
+    if((service->length + COM_ADU_REQUIRED_PART) > COM_BUFFER_SIZE){return false;}
     else
     {
         //we can replace data_buffer by second buffer in future, but for now it is ok
@@ -363,15 +360,9 @@ static void task_flowControlProc(void *pvParameters)
         if(rc_in_progress == true)
         {
             wdt--;
-            if(wdt == 0)
-            {
-                resetAndFlush();
-            }
+            if(wdt == 0){resetAndFlush();}
         }
-        else
-        {
-            wdt = COM_TIMER_RELOAD_VALUE;
-        }
+        else{wdt = COM_TIMER_RELOAD_VALUE;}
         vTaskDelay(COM_TIMER_TICKS);
     }
 }
@@ -384,12 +375,10 @@ static void task_flowControlProc(void *pvParameters)
 static void task_incCmdProc(void *pvParameters)
 {
     (void)(pvParameters);
-
     for(;;)
     {
         xSemaphoreTake(xSemaphore_data_received,portMAX_DELAY);
         COM_MES_HEADER_TypeDef *mes_header = (COM_MES_HEADER_TypeDef*)rx_control.p_buffer;
-    
         if(mes_header->addr == TARGET_ADDRESS)
         {
             bool func_exist = false;
@@ -403,15 +392,9 @@ static void task_incCmdProc(void *pvParameters)
                     func_exist = true;
                     break;
                 }
-                else
-                {
-                    continue;
-                }
+                else{continue;}
             }
-            if(func_exist == false)
-            {
-                com_response_error((mes_header->func | (uint8_t)(0x80U)),(uint8_t)(COM_EXCEPTION_1));
-            }
+            if(func_exist == false){com_response_error((mes_header->func | (uint8_t)(0x80U)),(uint8_t)(COM_EXCEPTION_1));}
         }else{}//do nothing, address not recognized
     }
 }

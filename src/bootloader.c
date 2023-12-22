@@ -178,7 +178,7 @@ static void boot_init(void)
     // parameters checking from target_cfg.h
     bool state = initDataValidate(); 
     if(state != true){for(;;){}}
-    boot_control.stay_in_boot = boot_stay_in_request();
+    boot_control.stay_in_boot = boot_check_stay_in();
     state                     = appImageVerify();
 
     if((state                     == true) || 
@@ -657,10 +657,12 @@ static int writeRegisterCmdExe(const uint16_t address, const uint16_t value)
                 switch(value)
                 {
                     case 0U:
-                        boot_control.stay_in_boot = false;
+                        boot_stay_in_reset();
+                        boot_control.stay_in_boot = boot_check_stay_in();
                         break;
                     case REG_BOOT_CONTROL_SIB:
-                        boot_control.stay_in_boot = true;
+                        boot_stay_in_request();
+                        boot_control.stay_in_boot = boot_check_stay_in();
                         break;
                     default:
                         break;
@@ -923,11 +925,17 @@ void __attribute__((weak)) boot_hw_init(void){}
 void __attribute__((weak)) boot_hw_deinit(void){}
 
 /**
- * @brief weak implementation of stay in boot request
+ * @brief weak implementation of cheking if we want to stay in boot
  * 
  * @retval returns always true 
 */
-bool __attribute__((weak)) boot_stay_in_request(void){return true;}
+bool __attribute__((weak)) boot_check_stay_in(void){return true;}
+
+/**
+ * @brief weak implementation of stay in boot request
+ * 
+*/
+void __attribute__((weak)) boot_stay_in_request(void){}
 
 /**
  * @brief weak implementation of stay in boot resetting 
@@ -1019,7 +1027,7 @@ void __attribute__((weak)) boot_page_erase(const uint32_t page_start_addr)
  * @param p_data pointer to data to be written
  * @param size   data size in bytes (!IMPORTANT must be multiple of 4 bytes)
  * 
- * @retval true in case of success, false in case of error
+ * @retval true in case of success, false in case of error (always false)
 */
 bool __attribute__((weak)) boot_flash_write_block(const uint32_t addr, 
                                                   const uint8_t* p_data, 
@@ -1028,5 +1036,5 @@ bool __attribute__((weak)) boot_flash_write_block(const uint32_t addr,
     (void)(addr);
     (void)(p_data);
     (void)(size);
-    return true;
+    return false;
 }
