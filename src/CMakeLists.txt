@@ -5,37 +5,35 @@ set(CMAKE_SYSTEM_PROCESSOR ARM)
 
 project (sm_bootloader)
 
-#special compiler flags, like cpu/fpu type config  
+#special compiler flags, like CPU/FPU type configuration  
 if(NOT DEFINED GCC_TARGET_COMPILE_OPTIONS)
         message( SEND_ERROR "target compiler flags not defined.")
 endif()
-#path to dir with portable include for rtos config
+#path to directory with portable includes for RTOS configuration
 if(NOT DEFINED RTOS_PORTABLE_INCLUDE_DIR)
-        message( SEND_ERROR "rtos target platform not defined.")
+        message( SEND_ERROR "FreeRTOS target platform not defined.")
 endif()
-#path to portable src for rtos config
+#path to portable sources for RTOS configuration
 if(NOT DEFINED RTOS_PORTABLE_SRC)
-        message( SEND_ERROR "rtos target platform not defined.")
+        message( SEND_ERROR "FreeRTOS target platform not defined.")
 endif()
 
-#path to dir with target config (target_cfg.h and FreeRTOSConfig.h)
+#path to directory with target configuration (target_cfg.h and FreeRTOSConfig.h)
 if(NOT DEFINED TARGET_CONFIG_INCLUDE_DIR)
-        message( SEND_ERROR "target configucation not found.")
+        message( SEND_ERROR "target configuration not found.")
 endif()
-
-set(RTOS_SRC
-    rtos/event_groups.c
-    rtos/heap_1.c
-    rtos/list.c
-    rtos/queue.c
-    rtos/stream_buffer.c
-    rtos/tasks.c
-    rtos/timers.c
-)
 
 set(BOOTLOADER_SRC
         bootloader.c
         com.c
+)
+
+
+set(RTOS_SRC
+    rtos/heap_1.c
+    rtos/list.c
+    rtos/queue.c
+    rtos/tasks.c
 )
 
 set(GCC_COMMON_COMPILE_OPTIONS "-fdata-sections;-ffunction-sections;-O1;-Wall;-g;")
