@@ -15,7 +15,7 @@
         {
             "type": "shell",
             "label": "CONFIGURE-32F0308DISCOVERY",
-            "command": "cmake -DARM_CM0_CORE=ON -Bbuild",
+            "command": "cmake -Bbuild",
             "options": {"cwd": "${workspaceFolder}/hw/32F0308DISCOVERY"},
             "problemMatcher": []
         }
