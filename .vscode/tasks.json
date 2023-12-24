@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "label": "BUILD-32F0308DISCOVERY",
-            "command": "cmake --build build --clean-first",
+            "command": "cmake --build build",
             "group": {
                 "kind": "build",
                 "isDefault": false

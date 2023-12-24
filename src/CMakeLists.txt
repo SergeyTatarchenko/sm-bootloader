@@ -28,12 +28,12 @@ set(BOOTLOADER_SRC
         com.c
 )
 
-
 set(RTOS_SRC
     rtos/heap_1.c
     rtos/list.c
     rtos/queue.c
     rtos/tasks.c
+    rtos/timers.c
 )
 
 set(GCC_COMMON_COMPILE_OPTIONS "-fdata-sections;-ffunction-sections;-O1;-Wall;-g;")

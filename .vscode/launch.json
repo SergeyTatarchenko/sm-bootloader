@@ -6,10 +6,10 @@
             "request": "launch",
             "name": "stm32f030-debug-openocd",
             "servertype": "openocd",
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "target-build",
+            "cwd": "${workspaceRoot}/hw/32F0308DISCOVERY/build",
+            "preLaunchTask": "BUILD-32F0308DISCOVERY",
             "runToEntryPoint": "main",
-            "executable": "test_bootloader.elf",
+            "executable": "32f0308discovery-demo.elf",
             "device": "STM32F030C8T6",
             "configFiles": [
                 "${workspaceRoot}/hw/32F0308DISCOVERY/openocd/stlink-v2-1.cfg",
