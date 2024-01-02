@@ -138,16 +138,15 @@ enum BootloaderStatus
 
 #pragma pack(push)
 #pragma pack(2)
-// struct with file for actual bootloader status
+// file struct for file with APP_INFO_ID id
 typedef struct 
 {
-    // array with actual bootloader version in ASCII (max 16 chars + 1 end symbol)
-    char boot_version[17];
-    // array with bootloader name in ASCII (max 32 chars + 1 end symbol)
-    char boot_name[33];
-    // how many bytes we have for app
-    uint32_t available_rom; 
+    char boot_version[17];  // array with actual bootloader version in ASCII (max 16 chars + 1 end symbol)
+    char boot_name[33];     // array with bootloader name in ASCII (max 32 chars + 1 end symbol)
+    uint32_t available_rom;
+     
 }BootloaderInfo_TypeDef;
+
 #pragma  pack(pop)
 
 #endif // COMMON_H
