@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "BUILD-32F0308DISCOVERY",
+            "command": "cmake --build build",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {"cwd": "${workspaceFolder}/hw/32F0308DISCOVERY"},
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "CONFIGURE-32F0308DISCOVERY",
+            "command": "cmake -Bbuild",
+            "options": {"cwd": "${workspaceFolder}/hw/32F0308DISCOVERY"},
+            "problemMatcher": []
+        }
+    ]
+}
