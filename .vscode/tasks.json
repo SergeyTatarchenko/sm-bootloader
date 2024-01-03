@@ -18,6 +18,24 @@
             "command": "cmake -Bbuild",
             "options": {"cwd": "${workspaceFolder}/hw/32F0308DISCOVERY"},
             "problemMatcher": []
-        }
+        },
+        {
+            "type": "shell",
+            "label": "BUILD-BlackPill_STM32F411CEU6",
+            "command": "cmake --build build",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {"cwd": "${workspaceFolder}/hw/BlackPill_STM32F411CEU6"},
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "CONFIGURE-BlackPill_STM32F411CEU6",
+            "command": "cmake -Bbuild",
+            "options": {"cwd": "${workspaceFolder}/hw/BlackPill_STM32F411CEU6"},
+            "problemMatcher": []
+        },
     ]
 }
