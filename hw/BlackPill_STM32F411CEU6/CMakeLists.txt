@@ -11,27 +11,26 @@ set(CMAKE_C_COMPILER_WORKS   1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 set(CMAKE_ASM_COMPILER_WORKS 1)
 
-project (32f0308discovery-demo)
+project (blackpill_v3-demo)
 #without enable ASM language cmake will not pass asm file to compiler
 enable_language(C ASM)
 
 set (DIR_SRCS
-        system_stm32f0xx.c
-        startup_stm32f0xx.s
-        hw_init.c
+        system_stm32f4xx.c
+        startup_stm32f411vehx.s
     )
 
 set(EXECUTABLE ${PROJECT_NAME}.elf)
 add_executable (${EXECUTABLE} ${DIR_SRCS})
 
 #special flags
-set(GCC_TARGET_COMPILE_OPTIONS "-mcpu=cortex-m0;-mthumb;-mlittle-endian;")
+set(GCC_TARGET_COMPILE_OPTIONS "-mcpu=cortex-m4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-mthumb;-mlittle-endian;")
 #path to rtos portable sources (WARNING! path shall be able to find from bootloader folder)
-set(RTOS_PORTABLE_SRC rtos/portable/ARM_CM0/port.c)
+set(RTOS_PORTABLE_SRC rtos/portable/ARM_CM4F/port.c)
 #path to rtos portable include dir (WARNING! path shall be able to find from bootloader folder)
-set(RTOS_PORTABLE_INCLUDE_DIR rtos/portable/ARM_CM0)
+set(RTOS_PORTABLE_INCLUDE_DIR rtos/portable/ARM_CM4F)
 #path to  dir with target config (WARNING! path shall be able to find from bootloader folder)
-set(TARGET_CONFIG_INCLUDE_DIR ../config/32F0308DISCOVERY)
+set(TARGET_CONFIG_INCLUDE_DIR ../config/BlackPill_STM32F411CEU6)
 
 #path bootloader library to project and extract common compiler flags
 add_subdirectory(../../src boot-common)
@@ -40,10 +39,10 @@ get_directory_property(GCC_COMMON_COMPILE_OPTIONS DIRECTORY ../../src DEFINITION
 target_link_directories(${EXECUTABLE} PUBLIC ../../src)
 target_link_libraries (${EXECUTABLE} sm_bootloader)
 
-set(LINKER_SCRIPT  ${CMAKE_CURRENT_SOURCE_DIR}/STM32F030R8_FLASH.ld) 
-set(LINKER_OPTIONS "-mcpu=cortex-m0;-mthumb;-mlittle-endian;--specs=nano.specs;-Wl,--gc-sections;")
+set(LINKER_SCRIPT  ${CMAKE_CURRENT_SOURCE_DIR}/STM32F411VEHX_FLASH.ld) 
+set(LINKER_OPTIONS "-mcpu=cortex-m4;-mthumb;-mfpu=fpv4-sp-d16;-mfloat-abi=hard;-mlittle-endian;--specs=nano.specs;-Wl,--gc-sections;")
 
-#include path
+#common inclide path
 target_include_directories(${EXECUTABLE} PRIVATE
         ./include
         ../../src/rtos/include
